@@ -1,0 +1,11 @@
+.profile__button {
+    width: 150px;
+    height: 50px;
+    background-color: #000000;
+    border-color: #FFFFFF;
+    background-image: url(../../../images/Vector.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5%;
+    
+}
