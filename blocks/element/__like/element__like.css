@@ -1,0 +1,14 @@
+.element__like {
+    min-width: 22px;
+    height: 19px;
+    background-image: url(../../../images/heart.svg);
+    transition: opacity .3s;
+}
+
+.element__like:hover {
+    opacity: 0.8;
+}
+
+.element__like:active {
+    background-image: url(../../../images/Union.svg);
+}
