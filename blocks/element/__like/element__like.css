@@ -3,6 +3,7 @@
     height: 19px;
     background-image: url(../../../images/heart.svg);
     transition: opacity .3s;
+    cursor: pointer;
 }
 
 .element__like:hover {

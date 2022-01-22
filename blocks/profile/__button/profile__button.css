@@ -8,6 +8,8 @@
     background-repeat: no-repeat;
     border-radius: 2%;
     transition: opacity .3s;
+    cursor: pointer;
+
 }
 
 .profile__button:hover {

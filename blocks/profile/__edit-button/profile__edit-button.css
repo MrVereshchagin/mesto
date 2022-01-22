@@ -9,6 +9,7 @@
     background-size: cover;
     border-radius: 2%;
     transition: opacity .3s;
+    cursor: pointer;
 }
 
 .profile__edit-button:hover {
