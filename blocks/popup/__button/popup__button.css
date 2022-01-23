@@ -9,6 +9,12 @@
     font-size: 18px;
     line-height: 22px;
     padding: 0;
+    cursor: pointer;
+    transition: opacity .5s;
+}
+
+.popup__button:hover {
+    opacity: .8;
 }
 
 @media screen and (max-width: 1023px) {
