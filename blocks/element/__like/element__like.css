@@ -4,6 +4,7 @@
     background-image: url(../../../images/heart.svg);
     transition: opacity .3s;
     cursor: pointer;
+    border: none;
 }
 
 .element__like:hover {
