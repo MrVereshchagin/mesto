@@ -74,3 +74,21 @@ function formSubmitHandler(event) {
 
 formElement.addEventListener('submit', formSubmitHandler);
 
+const cardPopupSection = document.querySelector('.popup__cards');
+const addCard = document.querySelector('.profile__button');
+const popupCardCloseButton = document.querySelector('.popup__close_card');
+let cardInput = document.querySelector('.popup__input_card_title');
+let cardImage = document.querySelector('.popup__input_card_link');
+
+function openPopupCardWindow() {
+  cardPopupSection.classList.add('popup_opened');
+    
+}
+
+function closePopupCardWindow() {
+  cardPopupSection.classList.remove('popup_opened');
+}
+
+addCard.addEventListener('click', openPopupCardWindow);
+popupCardCloseButton.addEventListener('click', closePopupCardWindow);
+
