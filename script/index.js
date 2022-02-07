@@ -39,6 +39,7 @@ function renderCards(item) {
     newElement.querySelector('.element__photo').src = item.link;
     newElement.querySelector('.element__title').textContent = item.name;
     newElement.querySelector('.element__like').addEventListener('click', likeFunction);
+    newElement.querySelector('.element__trash').addEventListener('click', deleteCard);
 
     sectionElements.prepend(newElement);
 }
@@ -125,15 +126,18 @@ formCardElement.addEventListener('submit', cardSubmitHandler);
 const likeButtons = document.querySelectorAll('.element__like');
 
 // Создаем функцию для лайков
-
 function likeFunction(e) {
   e.preventDefault();
   e.target.classList.toggle('element__like_non_active');
   e.target.classList.toggle('element__like_active');
 }
 
+//Создаем функцию для удаления карточек
+const trash = document.querySelectorAll('.element__trash');
 
-
-
+function deleteCard(e) {
+  e.preventDefault();
+  e.target.closest('.element').remove();
+}
 
 
