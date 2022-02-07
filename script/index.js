@@ -38,6 +38,8 @@ function renderCards(item) {
     const newElement = template.cloneNode(true);
     newElement.querySelector('.element__photo').src = item.link;
     newElement.querySelector('.element__title').textContent = item.name;
+    newElement.querySelector('.element__like').addEventListener('click', likeFunction);
+
     sectionElements.prepend(newElement);
 }
 
@@ -84,7 +86,7 @@ function formSubmitHandler(event) {
 formElement.addEventListener('submit', formSubmitHandler);
 
 
-// Сщздаем переменные в котрых храним поля нового попапа, кнопку профайла для добавления карточек
+// Создаем переменные в котрых храним поля нового попапа, кнопку профайла для добавления карточек
 const cardPopupSection = document.querySelector('.popup__cards');
 const addCard = document.querySelector('.profile__button');
 const popupCardCloseButton = document.querySelector('.popup__close_card');
@@ -92,6 +94,7 @@ let cardInput = document.querySelector('.popup__input_card_title');
 let cardImage = document.querySelector('.popup__input_card_link');
 const formCardElement = document.querySelector('.popup__form_card');
 
+// Создаем функции открытия и закрытия попапа с карточками
 function openPopupCardWindow() {
   cardPopupSection.classList.add('popup_opened');
 }
@@ -100,9 +103,11 @@ function closePopupCardWindow() {
   cardPopupSection.classList.remove('popup_opened');
 }
 
+// Вешаем обработчики на кнопки попапа с карточками
 addCard.addEventListener('click', openPopupCardWindow);
 popupCardCloseButton.addEventListener('click', closePopupCardWindow);
 
+// Создаем функцию добавления новой карточки при нажатии кнопки в попапе с карточками
 function cardSubmitHandler(event) {
   event.preventDefault();
   const newCard = 
@@ -114,4 +119,21 @@ function cardSubmitHandler(event) {
   closePopupCardWindow();
 }
 
+// Вешаем обработчик событий на форму попапа с карточками
 formCardElement.addEventListener('submit', cardSubmitHandler);
+
+const likeButtons = document.querySelectorAll('.element__like');
+
+// Создаем функцию для лайков
+
+function likeFunction(e) {
+  e.preventDefault();
+  e.target.classList.toggle('element__like_non_active');
+  e.target.classList.toggle('element__like_active');
+}
+
+
+
+
+
+
