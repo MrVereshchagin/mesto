@@ -146,8 +146,8 @@ function deleteCard(e) {
 // Создаем функцию для открытия попапа с картинкой
 
 const imagePopup = document.querySelector('.popup_image');
-const imagePopupItem = document.querySelector('.popup_image_item');
-let imagePopupCaption = document.querySelector('.popup_image_caption');
+const imagePopupItem = document.querySelector('.popup__image_item');
+let imagePopupCaption = document.querySelector('.popup__image_caption');
 const elemenTitle = document.querySelectorAll('.element__title');
 
 function openImagePopup(e) {
