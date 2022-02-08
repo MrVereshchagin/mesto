@@ -91,7 +91,7 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 
 // Создаем переменные в котрых храним поля нового попапа, кнопку профайла для добавления карточек
-const cardPopupSection = document.querySelector('.popup__cards');
+const cardPopupSection = document.querySelector('.popup_cards');
 const addCard = document.querySelector('.profile__button');
 const popupCardCloseButton = document.querySelector('.popup__close_card');
 let cardInput = document.querySelector('.popup__input_card_title');
@@ -145,9 +145,9 @@ function deleteCard(e) {
 
 // Создаем функцию для открытия попапа с картинкой
 
-const imagePopup = document.querySelector('.popup__image');
-const imagePopupItem = document.querySelector('.popup__image_item');
-let imagePopupCaption = document.querySelector('.popup__image_caption');
+const imagePopup = document.querySelector('.popup_image');
+const imagePopupItem = document.querySelector('.popup_image_item');
+let imagePopupCaption = document.querySelector('.popup_image_caption');
 const elemenTitle = document.querySelectorAll('.element__title');
 
 function openImagePopup(e) {
