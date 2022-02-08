@@ -34,13 +34,16 @@ function render(cards) {
     cards.forEach(renderCards);
 }
 
+// Создаем функцию подо все последующие манипуляции с карточками
 function renderCards(item) {
     const newElement = template.cloneNode(true);
     newElement.querySelector('.element__photo').src = item.link;
     newElement.querySelector('.element__title').textContent = item.name;
+    newElement.querySelector('.element__photo').alt = item.name;
     newElement.querySelector('.element__like').addEventListener('click', likeFunction);
     newElement.querySelector('.element__trash').addEventListener('click', deleteCard);
-
+    newElement.querySelector('.element__photo').addEventListener('click', openImagePopup);
+    
     sectionElements.prepend(newElement);
 }
 
@@ -140,4 +143,25 @@ function deleteCard(e) {
   e.target.closest('.element').remove();
 }
 
+// Создаем функцию для открытия попапа с картинкой
 
+const imagePopup = document.querySelector('.popup__image');
+const imagePopupItem = document.querySelector('.popup__image_item');
+let imagePopupCaption = document.querySelector('.popup__image_caption');
+const elemenTitle = document.querySelectorAll('.element__title');
+
+function openImagePopup(e) {
+  imagePopup.classList.add('popup_opened');
+  imagePopupItem.src = e.target.src;
+  imagePopupItem.alt = e.target.alt;
+  imagePopupCaption.textContent = imagePopupItem.alt;
+}
+
+// Создаем функцию закрытия попапа с картинкой
+const closePopupImage = document.querySelector('.popup__close_image');
+
+function closeImagePopup() {
+  imagePopup.classList.remove('popup_opened');
+}
+
+closePopupImage.addEventListener('click', closeImagePopup);
