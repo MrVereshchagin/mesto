@@ -36,25 +36,25 @@ function render(card) {
 
 // Создаем функцию подо все последующие манипуляции с карточками
 function createCard(item) {
-    const newElement = template.cloneNode(true);
-    const cardPhoto = newElement.querySelector('.element__photo');
-    cardPhoto.src = item.link;
-    newElement.querySelector('.element__title').textContent = item.name;
-    cardPhoto.alt = item.name;
-    newElement.querySelector('.element__like').addEventListener('click', likeFunction);
-    newElement.querySelector('.element__trash').addEventListener('click', deleteCard);
-    cardPhoto.addEventListener('click', () => openImagePopup(item.name, item.link));
-    
-    return newElement;
+  const newElement = template.cloneNode(true);
+  const cardPhoto = newElement.querySelector('.element__photo');
+  cardPhoto.src = item.link;
+  newElement.querySelector('.element__title').textContent = item.name;
+  cardPhoto.alt = item.name;
+  newElement.querySelector('.element__like').addEventListener('click', likeFunction);
+  newElement.querySelector('.element__trash').addEventListener('click', deleteCard);
+  cardPhoto.addEventListener('click', () => openImagePopup(item.name, item.link));
+  
+  return newElement;
 }
 
 render(initialCards);
 
 // Создаем функцию для открытия окна popup, а также присваиваем полям попапа изначальные значения, полученные из полей профайла, по умолчанию при первой загрузке
 function openPopupProfile() {
-    nameInput.value = profielName.textContent;
-    nicknameInput.value = profileNickname.textContent;
-    openPopup(popupSection);
+  nameInput.value = profielName.textContent;
+  nicknameInput.value = profileNickname.textContent;
+  openPopup(popupSection);
 }
 
 function openPopup(popup) {
@@ -77,10 +77,10 @@ buttonProfileClose.addEventListener('click', closePopupProfile);
 
 // Пишем функцию для вставки в поля профайла данных из интпутов попапа, введенные пользователем
 function handleProfileFormSubmit(event) {
-    event.preventDefault();
-    profielName.textContent = nameInput.value;
-    profileNickname.textContent = nicknameInput.value;
-    closePopupProfile();
+  event.preventDefault();
+  profielName.textContent = nameInput.value;
+  profileNickname.textContent = nicknameInput.value;
+  closePopupProfile();
 }
 
 // Вешаем обработчик событий на форму попапа, при нажатии кнопки сохранения
