@@ -45,13 +45,13 @@
         </div>
     </template>
 
-    <div class="popup">
+    <div class="popup popup_form">
         <div class="popup__container">
-            <button class="popup__close" type="button"></button>
+            <button class="popup__close popup__close_profile" type="button"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form action="#" class="popup__form" name="profilecard">
-                <input type="text" class="popup__input popup__input_type_name" name="profilename">
-                <input type="text" class="popup__input popup__input_type_nickname" name="profilenickname">
+            <form action="#" class="popup__form popup__form_profile" name="profilecard">
+                <input type="text" class="popup__input popup__input_profile_name" name="profilename">
+                <input type="text" class="popup__input popup__input_profile_nickname" name="profilenickname">
                 <button type="submit" class="popup__button">Сохранить</button>
             </form>
         </div>
@@ -78,6 +78,7 @@
             </div>
         </div>
     </div>
+    <script src="./script/cards.js"></script>
     <script src="./script/index.js"></script>
 </body>
 </html>
