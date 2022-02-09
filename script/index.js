@@ -2,6 +2,33 @@
 const sectionElements = document.querySelector('.elements');
 const template = document.querySelector('#template').content;
 
+// Создаем переменные для узлов кнопки редактирования профиля, блока попапа, в томч числе кнопки закрытия
+const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
+const popupSection = document.querySelector('.popup_form');
+const buttonProfileClose = document.querySelector('.popup__close_profile');
+
+// Создаем переменные для формы попапа, input-ов внутри формы, в которые вводятся измененные данные профиля, а также полей профиля которые будут отрисованы нами при загрузке страницы по умолчанию
+const formProfileEdit = document.querySelector('.popup__form_profile');
+const nameInput = formProfileEdit.querySelector('.popup__input_profile_name');
+const nicknameInput = formProfileEdit.querySelector('.popup__input_profile_nickname');
+const profielName = document.querySelector('.profile__name');
+const profileNickname = document.querySelector('.profile__nickname');
+
+// Создаем переменные в которых храним поля нового попапа, кнопку профайла для добавления карточек
+const popupAddCard = document.querySelector('.popup_cards');
+const buttonAddCardOpen = document.querySelector('.profile__button');
+const buttonAddCardClose = document.querySelector('.popup__close_card');
+const cardInput = document.querySelector('.popup__input_card_title');
+const cardImage = document.querySelector('.popup__input_card_link');
+const formAddCard = document.querySelector('.popup__form_card');
+
+// Создаем переменные для открытия и закрытия попапа с картинкой
+const imagePopup = document.querySelector('.popup_image');
+const imagePopupItem = document.querySelector('.popup__image_item');
+const imagePopupCaption = document.querySelector('.popup__image_caption');
+const closePopupImageButton = document.querySelector('.popup__close_image');
+
+
 // Создаем функцию для отрисовки карточек с вызовом функции по клонированию template с заполнением соответствующих полей и фото и заголовка, полученных из массива, вызываем функцию render
 function render(card) {
   card.forEach((card) => sectionElements.append(createCard(card)));
@@ -22,18 +49,6 @@ function createCard(item) {
 }
 
 render(initialCards);
-
-// Создаем переменные для узлов кнопки редактирования профиля, блока попапа, в томч числе кнопки закрытия
-const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
-const popupSection = document.querySelector('.popup_form');
-const buttonProfileClose = document.querySelector('.popup__close_profile');
-
-// Создаем переменные для формы попапа, input-ов внутри формы, в которые вводятся измененные данные профиля, а также полей профиля которые будут отрисованы нами при загрузке страницы по умолчанию
-const formProfileEdit = document.querySelector('.popup__form_profile');
-const nameInput = formProfileEdit.querySelector('.popup__input_profile_name');
-const nicknameInput = formProfileEdit.querySelector('.popup__input_profile_nickname');
-const profielName = document.querySelector('.profile__name');
-const profileNickname = document.querySelector('.profile__nickname');
 
 // Создаем функцию для открытия окна popup, а также присваиваем полям попапа изначальные значения, полученные из полей профайла, по умолчанию при первой загрузке
 function openPopupProfile() {
@@ -70,15 +85,6 @@ function handleProfileFormSubmit(event) {
 
 // Вешаем обработчик событий на форму попапа, при нажатии кнопки сохранения
 formProfileEdit.addEventListener('submit', handleProfileFormSubmit);
-
-
-// Создаем переменные в котрых храним поля нового попапа, кнопку профайла для добавления карточек
-const popupAddCard = document.querySelector('.popup_cards');
-const buttonAddCardOpen = document.querySelector('.profile__button');
-const buttonAddCardClose = document.querySelector('.popup__close_card');
-const cardInput = document.querySelector('.popup__input_card_title');
-const cardImage = document.querySelector('.popup__input_card_link');
-const formAddCard = document.querySelector('.popup__form_card');
 
 // Создаем функции открытия и закрытия попапа с карточками
 function openPopupCardWindow() {
@@ -122,11 +128,6 @@ function deleteCard(e) {
 }
 
 // Создаем функцию для открытия попапа с картинкой
-
-const imagePopup = document.querySelector('.popup_image');
-const imagePopupItem = document.querySelector('.popup__image_item');
-const imagePopupCaption = document.querySelector('.popup__image_caption');
-
 function openImagePopup(name, link) {
   openPopup(imagePopup);
   imagePopupItem.src = link;
@@ -135,8 +136,6 @@ function openImagePopup(name, link) {
 }
 
 // Создаем функцию закрытия попапа с картинкой
-const closePopupImageButton = document.querySelector('.popup__close_image');
-
 function closeImagePopup() {
   closePopup(imagePopup);
 }
