@@ -4,7 +4,7 @@ const template = document.querySelector('#template').content;
 
 // Создаем переменные для узлов кнопки редактирования профиля, блока попапа, в томч числе кнопки закрытия
 const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
-const popupSection = document.querySelector('.popup_form');
+const popupProfileEdit = document.querySelector('.popup_profile');
 const buttonProfileClose = document.querySelector('.popup__close_profile');
 
 // Создаем переменные для формы попапа, input-ов внутри формы, в которые вводятся измененные данные профиля, а также полей профиля которые будут отрисованы нами при загрузке страницы по умолчанию
@@ -54,7 +54,7 @@ render(initialCards);
 function openPopupProfile() {
   nameInput.value = profielName.textContent;
   nicknameInput.value = profileNickname.textContent;
-  openPopup(popupSection);
+  openPopup(popupProfileEdit);
 }
 
 function openPopup(popup) {
@@ -63,7 +63,7 @@ function openPopup(popup) {
 
 // Прописываем функцию закрытия попапа при клике на крестик
 function closePopupProfile() {
-  closePopup(popupSection);
+  closePopup(popupProfileEdit);
 }
 
 function closePopup(popup) {
