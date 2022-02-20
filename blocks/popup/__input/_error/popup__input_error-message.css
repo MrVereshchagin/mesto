@@ -6,6 +6,7 @@
     font-weight: 400;
     line-height: 15px;
     padding-top: 5px;
+    border: none;
 }
 
 .popup__input_error-message:last-of-type {
