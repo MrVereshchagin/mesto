@@ -1,27 +1,41 @@
 const formSubmit = (evt) => {
     evt.preventDefault();
-    console.log(evt.target.checkValidity());
 }
 
-const checkInputValidity = (formSelector, input) => {
-    const errorMessage = formSelector.querySelector(`#error-${input.id}`);
-    console.log(errorMessage);
-    if(input.validity.valid) {
-        errorMessage.textContent = '';
-        input.classList.remove('popup__input_type_error');
+const checkButtonValidity = (config, popupForm, submitButton) => {
+    if(popupForm.checkValidity()) {
+        submitButton.removeAttribute('disabled');
+        submitButton.classList.remove(config.inactiveButtonClass);
     } else {
-        errorMessage.textContent = input.validationMessage;
-        input.classList.add('popup__input_type_error');
+        submitButton.setAttribute('disabled', '');
+        submitButton.classList.add(config.inactiveButtonClass);
     }
 }
 
-function enableValidation() {
-    const formSelector = document.querySelector('.popup__form');
-    formSelector.addEventListener('submit', formSubmit);
-    const inputSelector = formSelector.querySelectorAll('.popup__input');
-    inputSelector.forEach((input) => {
-        input.addEventListener('input', () => checkInputValidity(formSelector, input));
-    });
+const checkInputValidity = (config, popupForm, input) => {
+    const errorMessage = popupForm.querySelector(`#error-${input.id}`);
+    if(input.validity.valid) {
+        errorMessage.textContent = '';
+        input.classList.remove(config.inputErrorClass);
+    } else {
+        errorMessage.textContent = input.validationMessage;
+        input.classList.add(config.inputErrorClass);
+    }
 }
 
-enableValidation();
+function enableValidation(config) {
+    const currentForm = document.querySelector(config.currentFormSelector);
+    const popupForm = currentForm.querySelector(config.formSelector);
+    popupForm.addEventListener('submit', formSubmit);
+    const inputSelector = currentForm.querySelectorAll(config.inputSelector);
+    const submitButton = currentForm.querySelector(config.submitButtonSelector);
+
+    checkButtonValidity(config, popupForm, submitButton);
+
+    inputSelector.forEach((input) => {
+        input.addEventListener('input', () => {
+            checkInputValidity(config, popupForm, input);
+            checkButtonValidity(config, popupForm, submitButton);
+        });
+    });
+}

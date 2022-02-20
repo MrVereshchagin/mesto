@@ -1,6 +1,13 @@
 .popup__input_error-message {
+    max-width: 358px;
+    min-height: 15px;
     color: #FF0000;
     font-size: 12px;
     font-weight: 400;
     line-height: 15px;
+    padding-top: 5px;
+}
+
+.popup__input_error-message:last-of-type {
+    margin: 0;
 }

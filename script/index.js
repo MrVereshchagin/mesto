@@ -55,6 +55,15 @@ function openPopupProfile() {
   nameInput.value = profielName.textContent;
   nicknameInput.value = profileNickname.textContent;
   openPopup(popupProfileEdit);
+  enableValidation({
+    formSelector: '.popup__form',
+    currentFormSelector: '.popup_opened',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input_error_visible'
+  }); 
 }
 
 function openPopup(popup) {
@@ -89,6 +98,15 @@ formProfileEdit.addEventListener('submit', handleProfileFormSubmit);
 // Создаем функции открытия и закрытия попапа с карточками
 function openPopupCardWindow() {
   openPopup(popupAddCard);
+  enableValidation({
+    formSelector: '.popup__form',
+    currentFormSelector: '.popup_opened',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input_error_visible'
+  }); 
 }
 
 function closePopupCardWindow() {
