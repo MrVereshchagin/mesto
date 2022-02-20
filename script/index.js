@@ -1,7 +1,6 @@
 // Выбираем секцию elements в которой отрисовывем изначальные карточки из массива, выбираем template для картинок, которые будет отрисовывать по контенту, содержащемуся в нем.
 const sectionElements = document.querySelector('.elements');
 const template = document.querySelector('#template').content;
-const popup = document.querySelectorAll('.popup');
 
 // Создаем переменные для узлов кнопки редактирования профиля, блока попапа, в томч числе кнопки закрытия
 const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
@@ -69,6 +68,12 @@ function openPopupProfile() {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  popup.addEventListener('click', closePopupWithClickOnOverlay);
+  document.addEventListener('keydown', function (event) {
+    if(event.key === 'Escape') {
+      closePopup(popup);
+    }
+  });
 }
 
 // Прописываем функцию закрытия попапа при клике на крестик
@@ -78,17 +83,15 @@ function closePopupProfile() {
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  popup.removeEventListener('click', closePopupWithClickOnOverlay);
 }
 
-// Создаем функцию для закрытия попапа при клике на оверлей
-popup.forEach((popup) => {
-  popup.addEventListener('click', (event) => {
-    if(event.target === event.currentTarget) {
-      closePopup(popup);
-    }
-  });
-});
-
+// Вешаем обработчик событий на оверлей для закрытия попапа при клике на затененную область
+function closePopupWithClickOnOverlay(popup) {
+  if(popup.target === popup.currentTarget) {
+    closePopup(popup.target);
+  }
+}
 
 // Вешаем обработчики событий на кнопку редактирования профиля и на крестик закртия попапа
 buttonProfileEditOpen.addEventListener('click', openPopupProfile);
