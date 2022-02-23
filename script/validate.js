@@ -1,5 +1,5 @@
-const formSubmit = (evt) => {
-    evt.preventDefault();
+const formSubmit = (event) => {
+    event.preventDefault();
 }
 
 const checkButtonValidity = (config, popupForm, submitButton) => {
@@ -39,3 +39,4 @@ function enableValidation(config) {
         });
     });
 }
+ 

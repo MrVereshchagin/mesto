@@ -1,6 +1,7 @@
 // Выбираем секцию elements в которой отрисовывем изначальные карточки из массива, выбираем template для картинок, которые будет отрисовывать по контенту, содержащемуся в нем.
 const sectionElements = document.querySelector('.elements');
 const template = document.querySelector('#template').content;
+const popups = document.querySelector('.popup');
 
 // Создаем переменные для узлов кнопки редактирования профиля, блока попапа, в томч числе кнопки закрытия
 const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
@@ -61,19 +62,22 @@ function openPopupProfile() {
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input_error_visible'
+    inputErrorClass: 'popup__input_type_error'
   }); 
 }
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   popup.addEventListener('click', closePopupWithClickOnOverlay);
-  document.addEventListener('keydown', function (event) {
-    if(event.key === 'Escape') {
-      closePopup(popup);
-    }
-  });
+  document.addEventListener('keydown', closeByEscape);
+}
+
+// Прописываем функцию закрытия попапа через клик на оверлей
+function closeByEscape(event) {
+  if(event.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
 }
 
 // Прописываем функцию закрытия попапа при клике на крестик
@@ -84,6 +88,7 @@ function closePopupProfile() {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   popup.removeEventListener('click', closePopupWithClickOnOverlay);
+  document.removeEventListener('keydown', closeByEscape);
 }
 
 // Вешаем обработчик событий на оверлей для закрытия попапа при клике на затененную область
@@ -118,8 +123,7 @@ function openPopupCardWindow() {
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input_error_visible'
+    inputErrorClass: 'popup__input_type_error'
   }); 
 }
 
