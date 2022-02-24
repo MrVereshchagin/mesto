@@ -52,19 +52,20 @@ function createCard(item) {
 render(initialCards);
 
 // Создаем функцию для открытия окна popup, а также присваиваем полям попапа изначальные значения, полученные из полей профайла, по умолчанию при первой загрузке
-function openPopupProfile() {
+function openPopupProfile(config) {
   nameInput.value = profielName.textContent;
   nicknameInput.value = profileNickname.textContent;
   openPopup(popupProfileEdit);
-  enableValidation({
-    formSelector: '.popup__form',
-    currentFormSelector: '.popup_opened',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error'
-  }); 
 }
+
+enableValidation({
+  formSelector: '.popup__form',
+  currentFormSelector: '.popup_profile',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error'
+}); 
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -103,29 +104,29 @@ buttonProfileEditOpen.addEventListener('click', openPopupProfile);
 buttonProfileClose.addEventListener('click', closePopupProfile);
 
 
-// Пишем функцию для вставки в поля профайла данных из интпутов попапа, введенные пользователем
+// Пишем функцию для вставки в поля профайла данных из инпутов попапа, введенные пользователем
 function handleProfileFormSubmit(event) {
   event.preventDefault();
   profielName.textContent = nameInput.value;
   profileNickname.textContent = nicknameInput.value;
-  closePopupProfile();
 }
 
 // Вешаем обработчик событий на форму попапа, при нажатии кнопки сохранения
 formProfileEdit.addEventListener('submit', handleProfileFormSubmit);
 
 // Создаем функции открытия и закрытия попапа с карточками
-function openPopupCardWindow() {
+function openPopupCardWindow(config) {
   openPopup(popupAddCard);
-  enableValidation({
-    formSelector: '.popup__form',
-    currentFormSelector: '.popup_opened',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error'
-  }); 
 }
+
+enableValidation({
+  formSelector: '.popup__form',
+  currentFormSelector: '.popup_cards',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error'
+}); 
 
 function closePopupCardWindow() {
   closePopup(popupAddCard);
