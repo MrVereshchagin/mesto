@@ -2,8 +2,8 @@ const formSubmit = (event) => {
     event.preventDefault();
 }
 
-const checkButtonValidity = (config, popupForm, submitButton) => {
-    if(popupForm.checkValidity()) {
+const checkButtonValidity = (config, form, submitButton) => {
+    if(form.checkValidity()) {
         submitButton.removeAttribute('disabled');
         submitButton.classList.remove(config.inactiveButtonClass);
     } else {
@@ -12,8 +12,8 @@ const checkButtonValidity = (config, popupForm, submitButton) => {
     }
 }
 
-const checkInputValidity = (config, popupForm, input) => {
-    const errorMessage = popupForm.querySelector(`#error-${input.id}`);
+const checkInputValidity = (config, form, input) => {
+    const errorMessage = form.querySelector(`#error-${input.id}`);
     if(input.validity.valid) {
         errorMessage.textContent = '';
         input.classList.remove(config.inputErrorClass);
@@ -24,19 +24,18 @@ const checkInputValidity = (config, popupForm, input) => {
 }
 
 function enableValidation(config) {
-    const currentForm = document.querySelector(config.currentFormSelector);
-    const popupForm = currentForm.querySelector(config.formSelector);
-    popupForm.addEventListener('submit', formSubmit);
-    const inputSelector = currentForm.querySelectorAll(config.inputSelector);
-    const submitButton = currentForm.querySelector(config.submitButtonSelector);
-
-    checkButtonValidity(config, popupForm, submitButton);
-
-    inputSelector.forEach((input) => {
-        input.addEventListener('input', () => {
-            checkInputValidity(config, popupForm, input);
-            checkButtonValidity(config, popupForm, submitButton);
-        });
+    const forms = document.querySelectorAll(config.formSelector);
+    forms.forEach((form) => {
+        form.addEventListener('submit', formSubmit);
+        const inputSelector = form.querySelectorAll(config.inputSelector);
+        const submitButton = form.querySelector(config.submitButtonSelector);
+        checkButtonValidity(config, form, submitButton);
+        inputSelector.forEach((input) => {
+            input.addEventListener('input', () => {
+            checkInputValidity(config, form, input);
+            checkButtonValidity(config, form, submitButton);
+            });
+        });   
     });
 }
  

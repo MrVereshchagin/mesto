@@ -3,10 +3,11 @@ const sectionElements = document.querySelector('.elements');
 const template = document.querySelector('#template').content;
 const popups = document.querySelector('.popup');
 
-// Создаем переменные для узлов кнопки редактирования профиля, блока попапа, в томч числе кнопки закрытия
+// Создаем переменные для узлов кнопки редактирования профиля, блока попапа, в том числе кнопки закрытия
 const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
 const popupProfileEdit = document.querySelector('.popup_profile');
 const buttonProfileClose = document.querySelector('.popup__close_profile');
+const buttonProfileSubmit = document.querySelector('.popup__button_edit_profile');
 
 // Создаем переменные для формы попапа, input-ов внутри формы, в которые вводятся измененные данные профиля, а также полей профиля которые будут отрисованы нами при загрузке страницы по умолчанию
 const formProfileEdit = document.querySelector('.popup__form_profile');
@@ -22,6 +23,7 @@ const buttonAddCardClose = document.querySelector('.popup__close_card');
 const cardInput = document.querySelector('.popup__input_card_title');
 const cardImage = document.querySelector('.popup__input_card_link');
 const formAddCard = document.querySelector('.popup__form_card');
+const buttonAddCardSubmit = document.querySelector('.popup__button_add_card');
 
 // Создаем переменные для открытия и закрытия попапа с картинкой
 const imagePopup = document.querySelector('.popup_image');
@@ -52,20 +54,13 @@ function createCard(item) {
 render(initialCards);
 
 // Создаем функцию для открытия окна popup, а также присваиваем полям попапа изначальные значения, полученные из полей профайла, по умолчанию при первой загрузке
-function openPopupProfile(config) {
+function openPopupProfile(popup) {
   nameInput.value = profielName.textContent;
   nicknameInput.value = profileNickname.textContent;
+  
   openPopup(popupProfileEdit);
+  checkButtonValidity({inactiveButtonClass: 'popup__button_disabled'}, formProfileEdit, buttonProfileSubmit);
 }
-
-enableValidation({
-  formSelector: '.popup__form',
-  currentFormSelector: '.popup_profile',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error'
-}); 
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -99,9 +94,10 @@ function closePopupWithClickOnOverlay(popup) {
   }
 }
 
-// Вешаем обработчики событий на кнопку редактирования профиля и на крестик закртия попапа
+// Вешаем обработчики событий на кнопку редактирования профиля и на крестик закрытия попапа
 buttonProfileEditOpen.addEventListener('click', openPopupProfile);
 buttonProfileClose.addEventListener('click', closePopupProfile);
+
 
 
 // Пишем функцию для вставки в поля профайла данных из инпутов попапа, введенные пользователем
@@ -109,6 +105,7 @@ function handleProfileFormSubmit(event) {
   event.preventDefault();
   profielName.textContent = nameInput.value;
   profileNickname.textContent = nicknameInput.value;
+  closePopupProfile();
 }
 
 // Вешаем обработчик событий на форму попапа, при нажатии кнопки сохранения
@@ -118,15 +115,6 @@ formProfileEdit.addEventListener('submit', handleProfileFormSubmit);
 function openPopupCardWindow(config) {
   openPopup(popupAddCard);
 }
-
-enableValidation({
-  formSelector: '.popup__form',
-  currentFormSelector: '.popup_cards',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error'
-}); 
 
 function closePopupCardWindow() {
   closePopup(popupAddCard);
@@ -147,6 +135,8 @@ function cardSubmitHandler(event) {
   cardInput.value = '';
   cardImage.value = '';
 
+  checkButtonValidity({inactiveButtonClass: 'popup__button_disabled'}, formAddCard, buttonAddCardSubmit);
+  
   sectionElements.prepend(createCard(newCard));
   closePopupCardWindow();
 }
@@ -178,3 +168,11 @@ function closeImagePopup() {
 }
 
 closePopupImageButton.addEventListener('click', closeImagePopup);
+
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error'
+}); 
