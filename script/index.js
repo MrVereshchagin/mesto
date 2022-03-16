@@ -1,3 +1,5 @@
+import { FormValidator } from './FormValidator.js';
+
 // Выбираем секцию elements в которой отрисовывем изначальные карточки из массива, выбираем template для картинок, которые будет отрисовывать по контенту, содержащемуся в нем.
 const sectionElements = document.querySelector('.elements');
 const template = document.querySelector('#template').content;
@@ -31,6 +33,20 @@ const imagePopupItem = document.querySelector('.popup__image_item');
 const imagePopupCaption = document.querySelector('.popup__image_caption');
 const closePopupImageButton = document.querySelector('.popup__close_image');
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error'
+}; 
+
+const editProfileValidator = new FormValidator(validationConfig, formProfileEdit);
+const addCardValidator = new FormValidator(validationConfig, formAddCard);
+
+editProfileValidator.enableValidation();
+addCardValidator.enableValidation();
+
 
 // Создаем функцию для отрисовки карточек с вызовом функции по клонированию template с заполнением соответствующих полей и фото и заголовка, полученных из массива, вызываем функцию render
 function render(card) {
@@ -59,7 +75,6 @@ function openPopupProfile(popup) {
   nicknameInput.value = profileNickname.textContent;
   
   openPopup(popupProfileEdit);
-  checkButtonValidity({inactiveButtonClass: 'popup__button_disabled'}, formProfileEdit, buttonProfileSubmit);
 }
 
 function openPopup(popup) {
@@ -134,9 +149,7 @@ function cardSubmitHandler(event) {
     };
   cardInput.value = '';
   cardImage.value = '';
-
-  checkButtonValidity({inactiveButtonClass: 'popup__button_disabled'}, formAddCard, buttonAddCardSubmit);
-  
+ 
   sectionElements.prepend(createCard(newCard));
   closePopupCardWindow();
 }
@@ -168,11 +181,3 @@ function closeImagePopup() {
 }
 
 closePopupImageButton.addEventListener('click', closeImagePopup);
-
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error'
-}); 
