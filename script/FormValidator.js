@@ -6,7 +6,7 @@ export class FormValidator {
         this._submitButton = this._form.querySelector(this._settings.submitButtonSelector);
     }
 
-   _checkButtonValidity () {
+   checkButtonValidity () {
         if(this._form.checkValidity()) {
             this._submitButton.removeAttribute('disabled');
             this._submitButton.classList.remove(this._settings.inactiveButtonClass);
@@ -28,13 +28,13 @@ export class FormValidator {
     }
 
     _setEventListener() {
-        this._checkButtonValidity();
+        this.checkButtonValidity();
         
         this._inputSelector.forEach((input) => {
             input.addEventListener('input', () => {
                 //console.log('this =>', this);
             this._checkInputValidity(input);
-            this._checkButtonValidity();
+            this.checkButtonValidity();
             });
         });   
     }
@@ -45,5 +45,14 @@ export class FormValidator {
         });
 
         this._setEventListener();
+    }
+
+    resetForm() {
+        this._form.reset();
+        this._inputSelector.forEach((input) => {
+            const errorMessage = this._form.querySelector(`#error-${input.id}`);
+            errorMessage.textContent = '';
+            input.classList.remove(this._settings.inputErrorClass);
+        });
     }
 }

@@ -113,8 +113,6 @@ function closePopupWithClickOnOverlay(popup) {
 buttonProfileEditOpen.addEventListener('click', openPopupProfile);
 buttonProfileClose.addEventListener('click', closePopupProfile);
 
-
-
 // Пишем функцию для вставки в поля профайла данных из инпутов попапа, введенные пользователем
 function handleProfileFormSubmit(event) {
   event.preventDefault();
@@ -128,6 +126,8 @@ formProfileEdit.addEventListener('submit', handleProfileFormSubmit);
 
 // Создаем функции открытия и закрытия попапа с карточками
 function openPopupCardWindow(config) {
+  addCardValidator.resetForm();
+  addCardValidator.checkButtonValidity();
   openPopup(popupAddCard);
 }
 
@@ -149,7 +149,7 @@ function cardSubmitHandler(event) {
     };
   cardInput.value = '';
   cardImage.value = '';
- 
+
   sectionElements.prepend(createCard(newCard));
   closePopupCardWindow();
 }
