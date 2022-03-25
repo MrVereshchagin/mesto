@@ -7,22 +7,22 @@ export class Card {
         this._link = data.link;
     }
 
-    _likeFunction() {
+    _likeFunction = () => {
         this._likeButton.classList.toggle('element__like_active');
     }
 
-    _deleteCard() {
+    _deleteCard = () => {
         this._newElement.remove();
     }
 
-    _openImagePopup() {
+    _openImagePopup = () => {
         openPopup(imagePopup);
         imagePopupItem.src = this._link;
         imagePopupCaption.textContent = this._name;
         imagePopupItem.alt = this._name;
     }
 
-    _setEventsListeners() {
+    _setEventsListeners = () => {
         this._deleteButton = this._newElement.querySelector('.element__trash');
         
         this._likeButton.addEventListener('click', this._likeFunction);
@@ -30,8 +30,8 @@ export class Card {
         this._cardPhoto.addEventListener('click', this._openImagePopup);
     }
 
-    createCard() {
-        this._newElement = this._template.cloneNode(true);
+    createCard () {
+        this._newElement = this._template.querySelector('.element').cloneNode(true);
         this._cardPhoto = this._newElement.querySelector('.element__photo');
         this._likeButton = this._newElement.querySelector('.element__like');
 
