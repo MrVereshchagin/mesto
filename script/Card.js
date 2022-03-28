@@ -2,12 +2,12 @@ import { imagePopup, imagePopupItem, imagePopupCaption, openPopup } from './util
 
 export class Card {
     constructor(data, cardTemplateSelector) {
-        this._template = document.querySelector('#template').content;
+        this._template = document.querySelector(cardTemplateSelector).content;
         this._name = data.name;
         this._link = data.link;
     }
 
-    _likeFunction = () => {
+    _likeCard = () => {
         this._likeButton.classList.toggle('element__like_active');
     }
 
@@ -25,7 +25,7 @@ export class Card {
     _setEventsListeners = () => {
         this._deleteButton = this._newElement.querySelector('.element__trash');
         
-        this._likeButton.addEventListener('click', this._likeFunction);
+        this._likeButton.addEventListener('click', this._likeCard);
         this._deleteButton.addEventListener('click', this._deleteCard);
         this._cardPhoto.addEventListener('click', this._openImagePopup);
     }
