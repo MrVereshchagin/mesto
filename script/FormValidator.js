@@ -17,6 +17,7 @@ export class FormValidator {
     }
 
     _showInputError(input) {
+        this._errorMessage = this._form.querySelector(`#error-${input.id}`);
         this._errorMessage.textContent = input.validationMessage;
         input.classList.add(this._settings.inputErrorClass);
     }

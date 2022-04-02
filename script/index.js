@@ -79,9 +79,8 @@ function render(cards) {
       name: card.name,
       link: card.link
     }
-    const myCard = new Card(newData, '#template');
-    const cardElement = myCard.createCard();
 
+    const cardElement = createCard(newData);
     sectionElements.append(cardElement);
   });
 }
@@ -131,6 +130,13 @@ function closePopupCardWindow() {
 buttonAddCardOpen.addEventListener('click', openPopupCardWindow);
 buttonAddCardClose.addEventListener('click', closePopupCardWindow);
 
+function createCard(data) {
+  const myCard = new Card(data, '#template');
+  const cardElement = myCard.createCard();
+  
+  return cardElement;
+}
+
 // Создаем функцию добавления новой карточки при нажатии кнопки в попапе с карточками
 function handleCardSubmit(event) {
   event.preventDefault();
@@ -142,10 +148,7 @@ function handleCardSubmit(event) {
  
   formAddCard.reset();
 
-
-  const myCard = new Card(newCard, '#template');
-  const cardElement = myCard.createCard();
-
+  const cardElement = createCard(newCard);
   sectionElements.prepend(cardElement);
   closePopupCardWindow();
 }
