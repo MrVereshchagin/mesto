@@ -1,6 +1,7 @@
 import { FormValidator } from './FormValidator.js';
 import { imagePopup, openPopup, closePopup } from './utils.js';
 import { Card } from './Card.js';
+import { Section } from './Section.js';
 
 const initialCards = [
   {
@@ -73,8 +74,7 @@ addCardValidator.enableValidation();
 
 
 // Создаем функцию для отрисовки карточек с вызовом функции по клонированию template с заполнением соответствующих полей и фото и заголовка, полученных из массива, вызываем функцию render
-function render(cards) {
-  cards.forEach((card) => {
+function render(card) {
     const newData = {
       name: card.name,
       link: card.link
@@ -82,10 +82,7 @@ function render(cards) {
 
     const cardElement = createCard(newData);
     sectionElements.append(cardElement);
-  });
 }
-
-render(initialCards);
 
 // Создаем функцию для открытия окна popup, а также присваиваем полям попапа изначальные значения, полученные из полей профайла, по умолчанию при первой загрузке
 function openPopupProfile(popup) {
@@ -145,11 +142,11 @@ function handleCardSubmit(event) {
       name: cardInput.value,
       link: cardImage.value
     };
- 
-  formAddCard.reset();
 
   const cardElement = createCard(newCard);
-  sectionElements.prepend(cardElement);
+  section.addItem(cardElement);
+  formAddCard.reset();
+ 
   closePopupCardWindow();
 }
 
@@ -162,3 +159,7 @@ function closeImagePopup() {
 }
 
 closePopupImageButton.addEventListener('click', closeImagePopup);
+
+const section = new Section({ items: initialCards, renderer: render }, '.elements');
+
+section.renderItems();
