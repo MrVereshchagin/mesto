@@ -1,10 +1,12 @@
 import { imagePopup, imagePopupItem, imagePopupCaption, openPopup } from './utils.js';
 
 export class Card {
-    constructor(data, cardTemplateSelector) {
+    constructor(data, cardTemplateSelector, handleImageClick) {
         this._template = document.querySelector(cardTemplateSelector).content;
         this._name = data.name;
         this._link = data.link;
+
+        this._handleImageClick = handleImageClick;
     }
 
     _likeCard = () => {
@@ -15,19 +17,19 @@ export class Card {
         this._newElement.remove();
     }
 
-    _openImagePopup = () => {
-        openPopup(imagePopup);
-        imagePopupItem.src = this._link;
-        imagePopupCaption.textContent = this._name;
-        imagePopupItem.alt = this._name;
-    }
+    // _openImagePopup = () => {
+        // openPopup(imagePopup);
+        // imagePopupItem.src = this._link;
+        // imagePopupCaption.textContent = this._name;
+        // imagePopupItem.alt = this._name;
+    // }
 
     _setEventsListeners = () => {
         this._deleteButton = this._newElement.querySelector('.element__trash');
         
         this._likeButton.addEventListener('click', this._likeCard);
         this._deleteButton.addEventListener('click', this._deleteCard);
-        this._cardPhoto.addEventListener('click', this._openImagePopup);
+        this._cardPhoto.addEventListener('click', this._handleImageClick);
     }
 
     createCard () {

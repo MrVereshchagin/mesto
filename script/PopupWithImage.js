@@ -1,6 +1,6 @@
 import { Popup } from './Popup.js'
 
-export class PopupWithImage extends Popup{
+export class PopupWithImage extends Popup {
     open(text, link) {
         const image = this._popup.querySelector('.popup__image_item');
         const caption = this._popup.querySelector('.popup__image_caption');
@@ -8,6 +8,6 @@ export class PopupWithImage extends Popup{
         image.src = link;
         caption.textContent = text;
 
-        super.open();
+        super.open(); 
     }
 }

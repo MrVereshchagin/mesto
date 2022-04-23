@@ -1,7 +1,8 @@
 import { FormValidator } from './FormValidator.js';
-import { imagePopup, openPopup, closePopup } from './utils.js';
+import { openPopup, closePopup } from './utils.js';
 import { Card } from './Card.js';
 import { Section } from './Section.js';
+import { PopupWithImage } from './PopupWithImage.js';
 
 const initialCards = [
   {
@@ -127,8 +128,10 @@ function closePopupCardWindow() {
 buttonAddCardOpen.addEventListener('click', openPopupCardWindow);
 buttonAddCardClose.addEventListener('click', closePopupCardWindow);
 
-function createCard(data) {
-  const myCard = new Card(data, '#template');
+function createCard (data) {
+  const myCard = new Card(data, '#template', () => {
+    imagePopup.open(data.name, data.link);
+  });
   const cardElement = myCard.createCard();
   
   return cardElement;
@@ -154,12 +157,15 @@ function handleCardSubmit(event) {
 formAddCard.addEventListener('submit', handleCardSubmit);
 
 // Создаем функцию закрытия попапа с картинкой
-function closeImagePopup() {
-  closePopup(imagePopup);
-}
-
-closePopupImageButton.addEventListener('click', closeImagePopup);
+// function closeImagePopup() {
+  // closePopup(imagePopup);
+// }
+// 
+// closePopupImageButton.addEventListener('click', closeImagePopup);
 
 const section = new Section({ items: initialCards, renderer: render }, '.elements');
+const imagePopup = new PopupWithImage('.popup_image');
+
+imagePopup.setEventListeners();
 
 section.renderItems();
