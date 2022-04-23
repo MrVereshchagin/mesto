@@ -3,6 +3,7 @@ import { openPopup, closePopup } from './utils.js';
 import { Card } from './Card.js';
 import { Section } from './Section.js';
 import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
 
 const initialCards = [
   {
@@ -38,8 +39,8 @@ const popups = document.querySelector('.popup');
 // Создаем переменные для узлов кнопки редактирования профиля, блока попапа, в том числе кнопки закрытия
 const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
 const popupProfileEdit = document.querySelector('.popup_profile');
-const buttonProfileClose = document.querySelector('.popup__close_profile');
-const buttonProfileSubmit = document.querySelector('.popup__button_edit_profile');
+// const buttonProfileClose = document.querySelector('.popup__close_profile');
+// const buttonProfileSubmit = document.querySelector('.popup__button_edit_profile');
 
 // Создаем переменные для формы попапа, input-ов внутри формы, в которые вводятся измененные данные профиля, а также полей профиля которые будут отрисованы нами при загрузке страницы по умолчанию
 const formProfileEdit = document.querySelector('.popup__form_profile');
@@ -55,9 +56,7 @@ const buttonAddCardClose = document.querySelector('.popup__close_card');
 const cardInput = document.querySelector('.popup__input_card_title');
 const cardImage = document.querySelector('.popup__input_card_link');
 const formAddCard = document.querySelector('.popup__form_card');
-const buttonAddCardSubmit = document.querySelector('.popup__button_add_card');
-
-const closePopupImageButton = document.querySelector('.popup__close_image');
+// const buttonAddCardSubmit = document.querySelector('.popup__button_add_card');
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -94,24 +93,25 @@ function openPopupProfile(popup) {
 }
 
 //Прописываем функцию закрытия попапа при клике на крестик
-function closePopupProfile() {
-  closePopup(popupProfileEdit);
-}
+// function closePopupProfile() {
+  // closePopup(popupProfileEdit);
+// }
 
 // Вешаем обработчики событий на кнопку редактирования профиля и на крестик закрытия попапа
 buttonProfileEditOpen.addEventListener('click', openPopupProfile);
-buttonProfileClose.addEventListener('click', closePopupProfile);
+// buttonProfileClose.addEventListener('click', closePopupProfile);
 
 // Пишем функцию для вставки в поля профайла данных из инпутов попапа, введенные пользователем
-function handleProfileFormSubmit(event) {
-  event.preventDefault();
-  profielName.textContent = nameInput.value;
-  profileNickname.textContent = nicknameInput.value;
-  closePopupProfile();
+function handleProfileFormSubmit(data) {
+  console.log(data);
+  const { profilename, profilenickname } = data; 
+  profielName.textContent = profilename;
+  profileNickname.textContent = profilenickname;
+  editProfilePopup.close();
 }
 
 // Вешаем обработчик событий на форму попапа, при нажатии кнопки сохранения
-formProfileEdit.addEventListener('submit', handleProfileFormSubmit);
+// formProfileEdit.addEventListener('submit', handleProfileFormSubmit);
 
 // Создаем функции открытия и закрытия попапа с карточками
 function openPopupCardWindow(config) {
@@ -126,7 +126,7 @@ function closePopupCardWindow() {
 
 // Вешаем обработчики на кнопки попапа с карточками
 buttonAddCardOpen.addEventListener('click', openPopupCardWindow);
-buttonAddCardClose.addEventListener('click', closePopupCardWindow);
+// buttonAddCardClose.addEventListener('click', closePopupCardWindow);
 
 function createCard (data) {
   const myCard = new Card(data, '#template', () => {
@@ -138,34 +138,27 @@ function createCard (data) {
 }
 
 // Создаем функцию добавления новой карточки при нажатии кнопки в попапе с карточками
-function handleCardSubmit(event) {
-  event.preventDefault();
-  const newCard = 
-    {
-      name: cardInput.value,
-      link: cardImage.value
-    };
-
-  const cardElement = createCard(newCard);
+function handleCardSubmit(data) {
+  const cardElement = createCard({
+    name: data['cardtitle'],
+    link: data['cardlink']
+  });
   section.addItem(cardElement);
   formAddCard.reset();
  
-  closePopupCardWindow();
+  addCardPopup.close();
 }
 
 // Вешаем обработчик событий на форму попапа с карточками
-formAddCard.addEventListener('submit', handleCardSubmit);
-
-// Создаем функцию закрытия попапа с картинкой
-// function closeImagePopup() {
-  // closePopup(imagePopup);
-// }
+// formAddCard.addEventListener('submit', handleCardSubmit);
 // 
-// closePopupImageButton.addEventListener('click', closeImagePopup);
-
 const section = new Section({ items: initialCards, renderer: render }, '.elements');
 const imagePopup = new PopupWithImage('.popup_image');
+const editProfilePopup = new PopupWithForm('.popup_profile', handleProfileFormSubmit);
+const addCardPopup = new PopupWithForm('.popup_cards', handleCardSubmit);
 
 imagePopup.setEventListeners();
+editProfilePopup.setEventListeners();
+addCardPopup.setEventListeners();
 
 section.renderItems();
