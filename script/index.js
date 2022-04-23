@@ -4,6 +4,7 @@ import { Card } from './Card.js';
 import { Section } from './Section.js';
 import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
+import { UserInfo } from './UserInfo.js';
 
 const initialCards = [
   {
@@ -86,10 +87,11 @@ function render(card) {
 
 // Создаем функцию для открытия окна popup, а также присваиваем полям попапа изначальные значения, полученные из полей профайла, по умолчанию при первой загрузке
 function openPopupProfile(popup) {
-  nameInput.value = profielName.textContent;
-  nicknameInput.value = profileNickname.textContent;
+  const { name, nickname } = userInfo.getUserInfo();
+  nameInput.value = name;
+  nicknameInput.value = nickname;
   
-  openPopup(popupProfileEdit);
+  editProfilePopup.open();
 }
 
 //Прописываем функцию закрытия попапа при клике на крестик
@@ -103,10 +105,11 @@ buttonProfileEditOpen.addEventListener('click', openPopupProfile);
 
 // Пишем функцию для вставки в поля профайла данных из инпутов попапа, введенные пользователем
 function handleProfileFormSubmit(data) {
-  console.log(data);
   const { profilename, profilenickname } = data; 
-  profielName.textContent = profilename;
-  profileNickname.textContent = profilenickname;
+  // profielName.textContent = profilename;
+  // profileNickname.textContent = profilenickname;
+
+  userInfo.setUserInfo(profilename, profilenickname);
   editProfilePopup.close();
 }
 
@@ -114,15 +117,15 @@ function handleProfileFormSubmit(data) {
 // formProfileEdit.addEventListener('submit', handleProfileFormSubmit);
 
 // Создаем функции открытия и закрытия попапа с карточками
-function openPopupCardWindow(config) {
+function openPopupCardWindow(data) {
   addCardValidator.resetForm();
   addCardValidator.checkButtonValidity();
-  openPopup(popupAddCard);
+  addCardPopup.open();
 }
 
-function closePopupCardWindow() {
-  closePopup(popupAddCard);
-}
+// function closePopupCardWindow() {
+  // closePopup(popupAddCard);
+// }
 
 // Вешаем обработчики на кнопки попапа с карточками
 buttonAddCardOpen.addEventListener('click', openPopupCardWindow);
@@ -162,3 +165,5 @@ editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 
 section.renderItems();
+
+const userInfo = new UserInfo({profileNameSelector: '.profile__name', profileNicknameSelector: '.profile__nickname'});
