@@ -1,5 +1,3 @@
-import { imagePopup, imagePopupItem, imagePopupCaption, openPopup } from './utils.js';
-
 export class Card {
     constructor(data, cardTemplateSelector, handleImageClick) {
         this._template = document.querySelector(cardTemplateSelector).content;
@@ -17,12 +15,6 @@ export class Card {
         this._newElement.remove();
     }
 
-    // _openImagePopup = () => {
-        // openPopup(imagePopup);
-        // imagePopupItem.src = this._link;
-        // imagePopupCaption.textContent = this._name;
-        // imagePopupItem.alt = this._name;
-    // }
 
     _setEventsListeners = () => {
         this._deleteButton = this._newElement.querySelector('.element__trash');
@@ -32,7 +24,7 @@ export class Card {
         this._cardPhoto.addEventListener('click', this._handleImageClick);
     }
 
-    createCard () {
+    createCard = () => {
         this._newElement = this._template.querySelector('.element').cloneNode(true);
         this._cardPhoto = this._newElement.querySelector('.element__photo');
         this._likeButton = this._newElement.querySelector('.element__like');
