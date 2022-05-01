@@ -1,3 +1,36 @@
+import CloseIcon from '../images/CloseIcon.svg';
+import dombai from '../images/dombai.jpg';
+import dombai1 from '../images/dombai1.jpg';
+import EditButton from '../images/EditButton.svg';
+import elbrus from '../images/elbrus.jpg';
+import elbrus1 from '../images/elbrus1.jpg';
+import heart from '../images/heart.svg';
+import image from '../images/image.jpg';
+import karachaevo_cherkessia from '../images/karachaevo_cherkessia.jpg';
+import karachaevsk from '../images/karachaevsk.jpg';
+import logo from '../images/logo.svg';
+import Trash from '../images/Trash.svg';
+import Union from '../images/Union.svg';
+import Vector from '../images/Vector.svg';
+
+const imagesFromImageFolder = [
+    { name: 'CloseIcon', image: CloseIcon },
+    { name: 'dombai', image: dombai },
+    { name: 'dombai1', image: dombai1 },
+    { name: 'EditButton', image: EditButton },
+    { name: 'elbrus', image: elbrus },
+    { name: 'elbrus1', image: elbrus1 },
+    { name: 'heart', image: heart },
+    { name: 'image', image: image },
+    { name: 'karachaevo_cherkessia', image: karachaevo_cherkessia },
+    { name: 'karachaevsk', image: karachaevsk },
+    { name: 'logo', image: logo },
+    { name: 'Trash', image: Trash },
+    { name: 'Union', image: Union },
+    { name: 'Vector', image: Vector }
+]
+
+import '../pages/index.css';
 import { FormValidator } from './FormValidator.js';
 import { Card } from './Card.js';
 import { Section } from './Section.js';
