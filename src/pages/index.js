@@ -13,31 +13,34 @@ import Trash from '../images/Trash.svg';
 import Union from '../images/Union.svg';
 import Vector from '../images/Vector.svg';
 
-const imagesFromImageFolder = [
-    { name: 'CloseIcon', image: CloseIcon },
-    { name: 'dombai', image: dombai },
-    { name: 'dombai1', image: dombai1 },
-    { name: 'EditButton', image: EditButton },
-    { name: 'elbrus', image: elbrus },
-    { name: 'elbrus1', image: elbrus1 },
-    { name: 'heart', image: heart },
-    { name: 'image', image: image },
-    { name: 'karachaevo_cherkessia', image: karachaevo_cherkessia },
-    { name: 'karachaevsk', image: karachaevsk },
-    { name: 'logo', image: logo },
-    { name: 'Trash', image: Trash },
-    { name: 'Union', image: Union },
-    { name: 'Vector', image: Vector }
-]
-
 import '../pages/index.css';
-import { initialCards, validationConfig } from '../utils/utils.js';
+import { validationConfig } from '../utils/utils.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { api } from '../components/Api.js';
+
+const imagesFromImageFolder = [
+  { name: 'CloseIcon', image: CloseIcon },
+  { name: 'dombai', image: dombai },
+  { name: 'dombai1', image: dombai1 },
+  { name: 'EditButton', image: EditButton },
+  { name: 'elbrus', image: elbrus },
+  { name: 'elbrus1', image: elbrus1 },
+  { name: 'heart', image: heart },
+  { name: 'image', image: image },
+  { name: 'karachaevo_cherkessia', image: karachaevo_cherkessia },
+  { name: 'karachaevsk', image: karachaevsk },
+  { name: 'logo', image: logo },
+  { name: 'Trash', image: Trash },
+  { name: 'Union', image: Union },
+  { name: 'Vector', image: Vector }
+]
+
+const userInfo = new UserInfo({profileNameSelector: '.profile__name', profileNicknameSelector: '.profile__nickname'});
 
 const sectionElements = document.querySelector('.elements');
 
@@ -53,17 +56,45 @@ const formAddCard = document.querySelector('.popup__form_card');
 const editProfileValidator = new FormValidator(validationConfig, formProfileEdit);
 const addCardValidator = new FormValidator(validationConfig, formAddCard);
 
-editProfileValidator.enableValidation();
-addCardValidator.enableValidation();
+const section = new Section({ items: [], renderer: render }, '.elements');
+const imagePopup = new PopupWithImage('.popup_image');
+const editProfilePopup = new PopupWithForm('.popup_profile', handleProfileFormSubmit);
+const addCardPopup = new PopupWithForm('.popup_cards', handleCardSubmit);
+const confirmPopup = new PopupWithForm('.popup_delete-confirm');
+
 
 function render(card) {
     const newData = {
       name: card.name,
-      link: card.link
+      link: card.link,
+      likes: card.likes
     }
 
     const cardElement = createCard(newData);
     sectionElements.append(cardElement);
+}
+
+function createCard (data) {
+  const myCard = new Card(
+    data,
+    '#template',
+    () => {
+      imagePopup.open(data.name, data.link);
+    },
+    (id) => {
+      confirmPopup.open();
+      confirmPopup.changeSubmitHandler(() => {
+        api.deleteCard(id)
+        .then((res) => {
+          myCard.deleteCard();
+          confirmPopup.close();
+        })
+      })
+    }
+  );
+
+  const cardElement = myCard.createCard();  
+  return cardElement;
 }
 
 function openPopupProfile(popup) {
@@ -74,13 +105,14 @@ function openPopupProfile(popup) {
   editProfilePopup.open();
 }
 
-buttonProfileEditOpen.addEventListener('click', openPopupProfile);
-
 function handleProfileFormSubmit(data) {
   const { profilename, profilenickname } = data; 
 
-  userInfo.setUserInfo(profilename, profilenickname);
-  editProfilePopup.close();
+  api.editProfile(profilename, profilenickname)
+    .then(() => {
+      userInfo.setUserInfo(profilename, profilenickname);
+      editProfilePopup.close();
+    })
 }
 
 function openPopupCardWindow() {
@@ -90,36 +122,62 @@ function openPopupCardWindow() {
   addCardPopup.open();
 }
 
+function handleCardSubmit(data) {
+  api.addCard(data['cardtitle'], data['cardlink'])
+    .then((res) => {
+      const cardElement = createCard({
+        name: res.name,
+        link: res.link,
+        likes: res.likes,
+        id: res._id
+      })
+      section.addItem(cardElement);
+      addCardPopup.close();
+    })
+}
+
+buttonProfileEditOpen.addEventListener('click', openPopupProfile);
 buttonAddCardOpen.addEventListener('click', openPopupCardWindow);
 
-function createCard (data) {
-  const myCard = new Card(data, '#template', () => {
-    imagePopup.open(data.name, data.link);
-  });
-  const cardElement = myCard.createCard();
-  
-  return cardElement;
-}
-
-function handleCardSubmit(data) {
-  const cardElement = createCard({
-    name: data['cardtitle'],
-    link: data['cardlink']
-  });
-  section.addItem(cardElement);
- 
-  addCardPopup.close();
-}
-
-const section = new Section({ items: initialCards, renderer: render }, '.elements');
-const imagePopup = new PopupWithImage('.popup_image');
-const editProfilePopup = new PopupWithForm('.popup_profile', handleProfileFormSubmit);
-const addCardPopup = new PopupWithForm('.popup_cards', handleCardSubmit);
+editProfileValidator.enableValidation();
+addCardValidator.enableValidation();
 
 imagePopup.setEventListeners();
 editProfilePopup.setEventListeners(); 
 addCardPopup.setEventListeners();
+confirmPopup.setEventListeners();
+
+api.getProfile()
+  .then((res) => {
+    userInfo.setUserInfo(res.name, res.about);
+  });
+
+api.getInitialCards()
+  .then((cardList) => {
+    cardList.forEach((data) => {
+      const card = createCard ({
+        name: data.name,
+        link: data.link,
+        likes: data.likes,
+        id: data._id
+      })
+      section.addItem(card);
+    })
+  })
 
 section.renderItems();
 
-const userInfo = new UserInfo({profileNameSelector: '.profile__name', profileNicknameSelector: '.profile__nickname'});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
