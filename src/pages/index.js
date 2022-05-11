@@ -91,6 +91,19 @@ function createCard (data) {
           confirmPopup.close();
         })
       })
+    },
+    (id) => {
+      if(myCard.isLiked()) {
+        api.deleteLike(id)
+          .then((res) => {
+          myCard.setLikes(res.likes);
+        })
+      } else {
+        api.addLike(id)
+          .then((res) => {
+            myCard.setLikes(res.likes);
+          })
+      }
     }
   );
 
