@@ -5,6 +5,9 @@ export class Card {
         this._link = data.link;
         this._likes = data.likes;
         this._id = data.id;
+        this._userId = data.userId;
+        this._ownerId = data.ownerId;
+
 
         this._handleImageClick = handleImageClick;
         this._handleDeleteClick = handleDeleteClick;
@@ -43,6 +46,10 @@ export class Card {
 
         this._setEventsListeners();
         this._setLikes();
+
+        if(this._ownerId !== this._userId) {
+            this._deleteButton.style.display = 'none';
+        }
 
         return this._newElement; 
     }

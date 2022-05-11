@@ -62,6 +62,7 @@ const editProfilePopup = new PopupWithForm('.popup_profile', handleProfileFormSu
 const addCardPopup = new PopupWithForm('.popup_cards', handleCardSubmit);
 const confirmPopup = new PopupWithForm('.popup_delete-confirm');
 
+let userId;
 
 function render(card) {
     const newData = {
@@ -129,7 +130,9 @@ function handleCardSubmit(data) {
         name: res.name,
         link: res.link,
         likes: res.likes,
-        id: res._id
+        id: res._id,
+        userId: userId,
+        ownerId: res.owner._id
       })
       section.addItem(cardElement);
       addCardPopup.close();
@@ -150,6 +153,8 @@ confirmPopup.setEventListeners();
 api.getProfile()
   .then((res) => {
     userInfo.setUserInfo(res.name, res.about);
+
+    userId = res._id;
   });
 
 api.getInitialCards()
@@ -159,7 +164,9 @@ api.getInitialCards()
         name: data.name,
         link: data.link,
         likes: data.likes,
-        id: data._id
+        id: data._id,
+        userId: userId,
+        ownerId: data.owner._id
       })
       section.addItem(card);
     })
