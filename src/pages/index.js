@@ -12,6 +12,7 @@ import logo from '../images/logo.svg';
 import Trash from '../images/Trash.svg';
 import Union from '../images/Union.svg';
 import Vector from '../images/Vector.svg';
+import avatar_svg from '../images/avatar_svg.svg';
 
 import '../pages/index.css';
 import { validationConfig } from '../utils/utils.js';
@@ -37,7 +38,8 @@ const imagesFromImageFolder = [
   { name: 'logo', image: logo },
   { name: 'Trash', image: Trash },
   { name: 'Union', image: Union },
-  { name: 'Vector', image: Vector }
+  { name: 'Vector', image: Vector },
+  { name: avatar_svg, image: avatar_svg }
 ]
 
 const userInfo = new UserInfo({profileNameSelector: '.profile__name', profileNicknameSelector: '.profile__nickname'});

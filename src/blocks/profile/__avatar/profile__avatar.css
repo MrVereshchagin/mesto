@@ -1,4 +1,10 @@
 .profile__avatar {
     max-width: 120px;
     border-radius: 50%;
+    transition: opacity .3s;
+}
+
+.profile__avatar:hover {
+    opacity: 0.8;
+    cursor: url(../../../images/avatar_svg.svg), pointer;
 }
