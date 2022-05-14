@@ -34,7 +34,6 @@ class Api {
         .catch(console.log)
     }
 
-<<<<<<< HEAD
     updateAvatar(avatar) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
@@ -43,16 +42,6 @@ class Api {
             avatar: avatar
             })
         })
-=======
-    editAvatar(avatar) {
-        return fetch(`${this._baseUrl}/users/me/${avatar}`, {
-            method: 'PATCH',
-            headers: this._headers,
-            body: JSON.stringify({
-            avatar
-            })
-             })
->>>>>>> f3a041b99de6c08b3ce321a0f1db54919d024a7b
             .then((res) => res.ok ? res.json() : Promise.reject(res.status))
             .catch(console.log)
         }
