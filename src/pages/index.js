@@ -12,6 +12,7 @@ import logo from '../images/logo.svg';
 import Trash from '../images/Trash.svg';
 import Union from '../images/Union.svg';
 import Vector from '../images/Vector.svg';
+import avatar from '../images/avatar_svg.svg';
 
 import '../pages/index.css';
 import { validationConfig } from '../utils/utils.js';
@@ -37,10 +38,11 @@ const imagesFromImageFolder = [
   { name: 'logo', image: logo },
   { name: 'Trash', image: Trash },
   { name: 'Union', image: Union },
-  { name: 'Vector', image: Vector }
+  { name: 'Vector', image: Vector },
+  { name: 'avatar_svg', image: avatar }
 ]
 
-const userInfo = new UserInfo({profileNameSelector: '.profile__name', profileNicknameSelector: '.profile__nickname'});
+const userInfo = new UserInfo({profileNameSelector: '.profile__name', profileNicknameSelector: '.profile__nickname', profileAvatarSelector: '.profile__avatar'});
 
 const sectionElements = document.querySelector('.elements');
 
@@ -49,6 +51,7 @@ const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
 const formProfileEdit = document.querySelector('.popup__form_profile');
 const nameInput = formProfileEdit.querySelector('.popup__input_profile_name');
 const nicknameInput = formProfileEdit.querySelector('.popup__input_profile_nickname');
+const avatarEditButton = document.querySelector('.profile__avatar');
 
 const buttonAddCardOpen = document.querySelector('.profile__button');
 const formAddCard = document.querySelector('.popup__form_card');
@@ -61,6 +64,7 @@ const imagePopup = new PopupWithImage('.popup_image');
 const editProfilePopup = new PopupWithForm('.popup_profile', handleProfileFormSubmit);
 const addCardPopup = new PopupWithForm('.popup_cards', handleCardSubmit);
 const confirmPopup = new PopupWithForm('.popup_delete-confirm');
+const avatarPopup = new PopupWithForm('.popup_avatar', handleAvatarSubmit);
 
 let userId;
 
@@ -129,6 +133,19 @@ function handleProfileFormSubmit(data) {
     })
 }
 
+
+function handleAvatarSubmit(data) {
+  api.updateAvatar(avatar)
+  .then((res) => {
+    userInfo.setUserInfo(res.name, res.about, res.avatar);
+    avatarPopup.close();
+  })
+}
+
+function openPopupAvatar(data) {
+  avatarPopup.open();
+}
+
 function openPopupCardWindow() {
   addCardValidator.resetForm();
   addCardValidator.checkButtonValidity();
@@ -154,6 +171,7 @@ function handleCardSubmit(data) {
 
 buttonProfileEditOpen.addEventListener('click', openPopupProfile);
 buttonAddCardOpen.addEventListener('click', openPopupCardWindow);
+avatarEditButton.addEventListener('click', openPopupAvatar);
 
 editProfileValidator.enableValidation();
 addCardValidator.enableValidation();
@@ -162,6 +180,7 @@ imagePopup.setEventListeners();
 editProfilePopup.setEventListeners(); 
 addCardPopup.setEventListeners();
 confirmPopup.setEventListeners();
+avatarPopup.setEventListeners();
 
 api.getProfile()
   .then((res) => {
