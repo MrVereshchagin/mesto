@@ -18,6 +18,7 @@
 .element__information{align-items:center;background-color:#fff;border-radius:0 0 10px 10px;display:flex;justify-content:space-between;max-width:246px;min-height:79px;padding:0 15px 0 21px}
 .element__title{font-size:24px;font-weight:900;line-height:29px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .element__like{background:none;background-position:50%;background-repeat:no-repeat;background-size:cover;border:none;cursor:pointer;height:19px;min-width:22px;transition:opacity .3s}.element__like_non_active{background-image:url(1ad06e85f169668a1f36.svg)}.element__like:hover{opacity:.6}.element__like_active{background-image:url(35948469632d0421d697.svg)}
+.element__like_count{margin-top:3px}
 .element__container{align-items:center;display:flex;flex-direction:column;justify-content:center}
 .footer{margin:0 auto;max-width:880px;padding-bottom:60px;padding-top:66px}@media screen and (max-width:1023px){.footer{padding-bottom:36px;padding-left:19px;padding-top:48px}}
 .footer__copyright{color:#545454;font-size:18px;line-height:22px;margin:0}@media screen and (max-width:1023px){.footer__copyright{font-size:14px;line-height:17px}}
