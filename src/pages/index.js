@@ -12,11 +12,7 @@ import logo from '../images/logo.svg';
 import Trash from '../images/Trash.svg';
 import Union from '../images/Union.svg';
 import Vector from '../images/Vector.svg';
-<<<<<<< HEAD
 import avatar from '../images/avatar_svg.svg';
-=======
-import avatar_svg from '../images/avatar_svg.svg';
->>>>>>> f3a041b99de6c08b3ce321a0f1db54919d024a7b
 
 import '../pages/index.css';
 import { validationConfig } from '../utils/utils.js';
@@ -43,11 +39,7 @@ const imagesFromImageFolder = [
   { name: 'Trash', image: Trash },
   { name: 'Union', image: Union },
   { name: 'Vector', image: Vector },
-<<<<<<< HEAD
   { name: 'avatar_svg', image: avatar }
-=======
-  { name: avatar_svg, image: avatar_svg }
->>>>>>> f3a041b99de6c08b3ce321a0f1db54919d024a7b
 ]
 
 const userInfo = new UserInfo({profileNameSelector: '.profile__name', profileNicknameSelector: '.profile__nickname', profileAvatarSelector: '.profile__avatar'});
@@ -143,7 +135,7 @@ function handleProfileFormSubmit(data) {
 
 
 function handleAvatarSubmit(data) {
-  api.updateAvatar(avatar)
+  api.updateAvatar(data.avatarlink)
   .then((res) => {
     userInfo.setUserInfo(res.name, res.about, res.avatar);
     avatarPopup.close();
