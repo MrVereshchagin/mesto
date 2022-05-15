@@ -6,6 +6,7 @@ export class PopupWithForm extends Popup {
 
         this._handleSubmit = handleSubmit;
         this._form = this._popup.querySelector('.popup__form');
+        this._submitButton = this._form.querySelector('.popup__button');
     }
 
     _getInputValues() {
@@ -29,6 +30,12 @@ export class PopupWithForm extends Popup {
             e.preventDefault();
             this._handleSubmit(this._getInputValues());
         })
+    }
+
+    setButtonText(text) {
+        if(this._submitButton) {
+          this._submitButton.textContent = text;
+        }
     }
 
     close() {

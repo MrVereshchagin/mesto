@@ -124,6 +124,7 @@ function openPopupProfile(popup) {
 }
 
 function handleProfileFormSubmit(data) {
+  editProfilePopup.setButtonText("Сохранение");
   const { profilename, profilenickname } = data; 
 
   api.editProfile(profilename, profilenickname)
@@ -131,14 +132,27 @@ function handleProfileFormSubmit(data) {
       userInfo.setUserInfo(profilename, profilenickname);
       editProfilePopup.close();
     })
+    .catch((err) => {
+      console.log(err)
+    })
+    .finally((res) => {
+      editProfilePopup.setButtonText("Сохранить");
+    })
 }
 
 
 function handleAvatarSubmit(data) {
+  avatarPopup.setButtonText("Сохранение");
   api.updateAvatar(data.avatarlink)
-  .then((res) => {
-    userInfo.setUserInfo(res.name, res.about, res.avatar);
-    avatarPopup.close();
+    .then((res) => {
+      userInfo.setUserInfo(res.name, res.about, res.avatar);
+      avatarPopup.close();
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+  .finally((res) => {
+    avatarPopup.setButtonText("Да");
   })
 }
 
@@ -154,6 +168,7 @@ function openPopupCardWindow() {
 }
 
 function handleCardSubmit(data) {
+  addCardPopup.setButtonText("Сохранение");
   api.addCard(data['cardtitle'], data['cardlink'])
     .then((res) => {
       const cardElement = createCard({
@@ -166,6 +181,12 @@ function handleCardSubmit(data) {
       })
       section.addItem(cardElement);
       addCardPopup.close();
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    .finally((res) => {
+      addCardPopup.setButtonText("Создать");
     })
 }
 
