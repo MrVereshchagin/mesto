@@ -5,8 +5,3 @@
     transition: opacity .3s;
     object-fit: cover;
 }
-
-.profile__avatar:hover {
-    opacity: 0.8;
-    background-image: url(../../../images/avatar_svg.svg);
-}

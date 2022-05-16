@@ -51,7 +51,7 @@ const buttonProfileEditOpen = document.querySelector('.profile__edit-button');
 const formProfileEdit = document.querySelector('.popup__form_profile');
 const nameInput = formProfileEdit.querySelector('.popup__input_profile_name');
 const nicknameInput = formProfileEdit.querySelector('.popup__input_profile_nickname');
-const avatarEditButton = document.querySelector('.profile__avatar');
+const avatarEditButton = document.querySelector('.profile__avatar_edit-button');
 const formAvatarEdit = document.querySelector('.popup__form_avatar')
 // 
 const buttonAddCardOpen = document.querySelector('.profile__button');
