@@ -15,8 +15,6 @@ export class UserInfo {
     setUserInfo(name, nickname, avatar) {
         this._nameElement.textContent = name;
         this._nicknameElement.textContent = nickname;
-        if(avatar !== undefined) {
-            this._avatar.src = avatar;
-        }
+        this._avatar.src = avatar;
     }
 }

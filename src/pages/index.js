@@ -52,7 +52,8 @@ const formProfileEdit = document.querySelector('.popup__form_profile');
 const nameInput = formProfileEdit.querySelector('.popup__input_profile_name');
 const nicknameInput = formProfileEdit.querySelector('.popup__input_profile_nickname');
 const avatarEditButton = document.querySelector('.profile__avatar');
-
+const formAvatarEdit = document.querySelector('.popup__form_avatar')
+// 
 const buttonAddCardOpen = document.querySelector('.profile__button');
 const formAddCard = document.querySelector('.popup__form_card');
 
@@ -65,6 +66,7 @@ const editProfilePopup = new PopupWithForm('.popup_profile', handleProfileFormSu
 const addCardPopup = new PopupWithForm('.popup_cards', handleCardSubmit);
 const confirmPopup = new PopupWithForm('.popup_delete-confirm');
 const avatarPopup = new PopupWithForm('.popup_avatar', handleAvatarSubmit);
+const editAvatarValidator = new FormValidator(validationConfig, formAvatarEdit);
 
 let userId;
 
@@ -72,7 +74,8 @@ function render(card) {
     const newData = {
       name: card.name,
       link: card.link,
-      likes: card.likes
+      likes: card.likes,
+      id: card._id
     }
 
     const cardElement = createCard(newData);
@@ -124,7 +127,7 @@ function openPopupProfile(popup) {
 }
 
 function handleProfileFormSubmit(data) {
-  editProfilePopup.setButtonText("Сохранение");
+  editProfilePopup.setButtonText("Сохранение...");
   const { profilename, profilenickname } = data; 
 
   api.editProfile(profilename, profilenickname)
@@ -142,7 +145,7 @@ function handleProfileFormSubmit(data) {
 
 
 function handleAvatarSubmit(data) {
-  avatarPopup.setButtonText("Сохранение");
+  avatarPopup.setButtonText("Сохранение...");
   api.updateAvatar(data.avatarlink)
     .then((res) => {
       userInfo.setUserInfo(res.name, res.about, res.avatar);
@@ -168,7 +171,7 @@ function openPopupCardWindow() {
 }
 
 function handleCardSubmit(data) {
-  addCardPopup.setButtonText("Сохранение");
+  addCardPopup.setButtonText("Сохранение...");
   api.addCard(data['cardtitle'], data['cardlink'])
     .then((res) => {
       const cardElement = createCard({
@@ -196,6 +199,7 @@ avatarEditButton.addEventListener('click', openPopupAvatar);
 
 editProfileValidator.enableValidation();
 addCardValidator.enableValidation();
+editAvatarValidator.enableValidation();
 
 imagePopup.setEventListeners();
 editProfilePopup.setEventListeners(); 
@@ -205,7 +209,7 @@ avatarPopup.setEventListeners();
 
 api.getProfile()
   .then((res) => {
-    userInfo.setUserInfo(res.name, res.about);
+    userInfo.setUserInfo(res.name, res.about, res.avatar);
 
     userId = res._id;
   });
@@ -221,11 +225,11 @@ api.getInitialCards()
         userId: userId,
         ownerId: data.owner._id
       })
-      section.addItem(card);
+      section.renderItems(cardList);
     })
   })
 
-section.renderItems();
+// section.renderItems();
 
 
 

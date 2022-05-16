@@ -48,7 +48,7 @@ export class Card {
         }
     }
 
-    _fillLike() {
+    _fillLike = () => {
         this._likeButton.classList.add('element__like_active');
     }
 
