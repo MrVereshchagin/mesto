@@ -75,7 +75,9 @@ function render(card) {
       name: card.name,
       link: card.link,
       likes: card.likes,
-      id: card._id
+      id: card._id,
+      userId: card.userId,
+      ownerId: card.owner._id
     }
 
     const cardElement = createCard(newData);
@@ -97,6 +99,9 @@ function createCard (data) {
           myCard.deleteCard();
           confirmPopup.close();
         })
+        .catch((err) => {
+          console.log(err)
+        })
       })
     },
     (id) => {
@@ -104,11 +109,17 @@ function createCard (data) {
         api.deleteLike(id)
           .then((res) => {
           myCard.setLikes(res.likes);
-        })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       } else {
         api.addLike(id)
           .then((res) => {
             myCard.setLikes(res.likes);
+          })
+          .catch((err) => {
+            console.log(err)
           })
       }
     }
@@ -207,26 +218,14 @@ addCardPopup.setEventListeners();
 confirmPopup.setEventListeners();
 avatarPopup.setEventListeners();
 
-api.getProfile()
-  .then((res) => {
-    userInfo.setUserInfo(res.name, res.about, res.avatar);
-
-    userId = res._id;
-  });
-
-api.getInitialCards()
-  .then((cardList) => {
-    cardList.forEach((data) => {
-      const card = createCard ({
-        name: data.name,
-        link: data.link,
-        likes: data.likes,
-        id: data._id,
-        userId: userId,
-        ownerId: data.owner._id
-      })
-      section.renderItems(cardList);
-    })
+Promise.all([api.getProfile(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
+    userId = userData._id;
+    section.renderItems(cards);
+  })
+  .catch((err) => {
+    console.log('Error', err)
   })
 
 // section.renderItems();
