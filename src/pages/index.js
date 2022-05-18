@@ -142,8 +142,8 @@ function handleProfileFormSubmit(data) {
   const { profilename, profilenickname } = data; 
 
   api.editProfile(profilename, profilenickname)
-    .then(() => {
-      userInfo.setUserInfo(profilename, profilenickname);
+    .then((res) => {
+      userInfo.setUserInfo(res.name, res.about, res.avatar);
       editProfilePopup.close();
     })
     .catch((err) => {
