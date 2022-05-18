@@ -76,7 +76,7 @@ function render(card) {
       link: card.link,
       likes: card.likes,
       id: card._id,
-      userId: card.userId,
+      userId: userId,
       ownerId: card.owner._id
     }
 
@@ -222,7 +222,7 @@ Promise.all([api.getProfile(), api.getInitialCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
     userId = userData._id;
-    section.renderItems(cards);
+    section.renderItems(cards, userId);
   })
   .catch((err) => {
     console.log('Error', err)
